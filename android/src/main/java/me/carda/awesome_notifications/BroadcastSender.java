@@ -54,6 +54,7 @@ public class BroadcastSender {
     }
 
     public static Boolean SendBroadcastKeepOnTopAction(Context context, ActionReceived actionReceived){
+             Log.d(TAG, "SendBroadcastKeepOnTopAction recive");
 
         Boolean success = false;
 
@@ -64,12 +65,21 @@ public class BroadcastSender {
 
             LocalBroadcastManager broadcastManager = LocalBroadcastManager.getInstance(context);
             success = broadcastManager.sendBroadcast(intent);
+            Log.d(TAG, "broadcastManager.sendBroadcast after");
+
 
             if(success){
-                //Log.d(TAG, "Sent created to broadcast");
+                Log.d(TAG, "success Sent created to broadcast");
+            } else {
+                                Log.d(TAG, "success not created to broadcast");
+
             }
 
         } catch (Exception e) {
+                                            Log.d(TAG, "catch not created to broadcast");
+    Log.e(TAG, "exception SendBroadcastKeepOnTopAction", e);
+        Log.d(TAG, "exception SendBroadcastKeepOnTopAction", e);
+
             e.printStackTrace();
         }
 

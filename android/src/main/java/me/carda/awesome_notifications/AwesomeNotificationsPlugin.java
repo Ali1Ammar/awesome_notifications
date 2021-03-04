@@ -11,11 +11,11 @@ import android.provider.Settings;
 import android.support.v4.media.session.MediaSessionCompat;
 import io.flutter.Log;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
+// import com.google.android.gms.tasks.OnCompleteListener;
+// import com.google.android.gms.tasks.Task;
+// import com.google.firebase.FirebaseApp;
+// import com.google.firebase.iid.InstanceIdResult;
+// import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -169,7 +169,7 @@ public class AwesomeNotificationsPlugin extends BroadcastReceiver implements Flu
 
         getApplicationLifeCycle();
 
-        enableFirebase(context);
+        // enableFirebase(context);
     }
 
     private void enableFirebase(Context context){
@@ -183,7 +183,7 @@ public class AwesomeNotificationsPlugin extends BroadcastReceiver implements Flu
         }
 
         Log.d(TAG, "Enabling firebase for resource id "+resourceId.toString()+"...");
-        FirebaseApp.initializeApp(context);
+        // FirebaseApp.initializeApp(context);
         firebaseEnabled = true;
         Log.d(TAG, "Firebase enabled");
     }
@@ -283,11 +283,15 @@ public class AwesomeNotificationsPlugin extends BroadcastReceiver implements Flu
 
     private void onBroadcastKeepOnTopActionNotification(Intent intent) {
         try {
+            Log.d(TAG, "onBroadcastKeepOnTopActionNotification recive");
 
             Serializable serializable = intent.getSerializableExtra(Definitions.EXTRA_BROADCAST_MESSAGE);
             pluginChannel.invokeMethod(Definitions.CHANNEL_METHOD_RECEIVED_ACTION, serializable);
+                        Log.d(TAG, "onBroadcastKeepOnTopActionNotification pluginChannel");
 
         } catch (Exception e) {
+                                    Log.d(TAG, "ohhh error onBroadcastKeepOnTopActionNotification");
+
             e.printStackTrace();
         }
     }
@@ -684,7 +688,7 @@ public class AwesomeNotificationsPlugin extends BroadcastReceiver implements Flu
 
     private void channelMethodIsFcmAvailable(MethodCall call, Result result) {
         try {
-            result.success(hasGooglePlayServices && firebaseEnabled && FirebaseMessaging.getInstance() != null);
+            // result.success(hasGooglePlayServices && firebaseEnabled && FirebaseMessaging.getInstance() != null);
         } catch (Exception e) {
             Log.w(TAG, "FCM could not enabled for this project.", e);
             result.success(false );
@@ -704,25 +708,25 @@ public class AwesomeNotificationsPlugin extends BroadcastReceiver implements Flu
                 throw new PushNotificationException("Firebase is not enabled for this project");
             }
 
-            FirebaseMessaging
-                    .getInstance()
-                    .getToken()
-                    .addOnCompleteListener(new OnCompleteListener<String>() {
-                        @Override
-                        public void onComplete(@NonNull Task<String> task) {
+            // FirebaseMessaging
+            //         .getInstance()
+            //         .getToken()
+            //         .addOnCompleteListener(new OnCompleteListener<String>() {
+            //             @Override
+            //             public void onComplete(@NonNull Task<String> task) {
 
-                            if (!task.isSuccessful()) {
-                                Exception exception = task.getException();
-                                Log.w(TAG, "Fetching FCM registration token failed", exception);
-                                result.error(exception.getMessage() ,"Fetching FCM registration token failed", exception);
-                                return;
-                            }
+            //                 if (!task.isSuccessful()) {
+            //                     Exception exception = task.getException();
+            //                     Log.w(TAG, "Fetching FCM registration token failed", exception);
+            //                     result.error(exception.getMessage() ,"Fetching FCM registration token failed", exception);
+            //                     return;
+            //                 }
 
-                            // Get new FCM registration token
-                            String token = task.getResult();
-                            result.success(token);
-                        }
-                    });
+            //                 // Get new FCM registration token
+            //                 String token = task.getResult();
+            //                 result.success(token);
+            //             }
+            //         });
 
         } catch (Exception e){
             result.error("Firebase service not available (check if you have google-services.json file)", e.getMessage(), e);
