@@ -11,13 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-<<<<<<< HEAD
-  platform: ^2.2.0
-  intl: 
-=======
   platform: ^3.0.0
   intl: ^0.17.0
->>>>>>> 86000c8bf5cd45b3da0c20c8d4666ce6fdd79422
 
 dev_dependencies:
   flutter_test:
