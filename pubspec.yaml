@@ -1,6 +1,6 @@
 name: awesome_notifications
 description: A complete solution to create Local Notifications and Push Notifications (Media Notifications, Big Picture, Big text, etc), through Firebase or another services, using Flutter.
-version: 0.0.5+4
+version: 0.0.5+7
 homepage: https://github.com/rafaelsetragni/awesome_notifications
 
 environment:
@@ -11,8 +11,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+<<<<<<< HEAD
   platform: ^2.2.0
   intl: 
+=======
+  platform: ^3.0.0
+  intl: ^0.17.0
+>>>>>>> 86000c8bf5cd45b3da0c20c8d4666ce6fdd79422
 
 dev_dependencies:
   flutter_test:
