@@ -17,22 +17,22 @@ class BitmapUtils extends MediaUtils {
   /// FACTORY METHODS *********************************************
 
   @override
-  getFromMediaAsset(String mediaPath) {
-    return AssetImage(cleanMediaPath(mediaPath));
+  getFromMediaAsset(String? mediaPath) {
+    return AssetImage(cleanMediaPath(mediaPath)!);
   }
 
   @override
-  getFromMediaFile(String mediaPath) {
-    return FileImage(File(cleanMediaPath(mediaPath)));
+  getFromMediaFile(String? mediaPath) {
+    return FileImage(File(cleanMediaPath(mediaPath)!));
   }
 
   @override
-  getFromMediaNetwork(String mediaPath) {
-    return NetworkImage(mediaPath);
+  getFromMediaNetwork(String? mediaPath) {
+    return NetworkImage(mediaPath!);
   }
 
   @override
-  getFromMediaResource(String mediaPath) {
-    return ResourceImage(mediaPath);
+  getFromMediaResource(String? mediaPath) {
+    return ResourceImage(mediaPath!);
   }
 }

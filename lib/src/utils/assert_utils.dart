@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 
 class AssertUtils {
   static String toSimpleEnumString<T>(T e) {
-    if (e == null) return null;
     return e.toString().split('.')[1];
   }
 
-  static bool isNullOrEmptyOrInvalid<T>(dynamic value, Type T) {
+  static bool? isNullOrEmptyOrInvalid<T>(dynamic value, Type T) {
     if (value == null) return true;
     if (value.runtimeType != T) return true;
 
@@ -23,10 +22,10 @@ class AssertUtils {
     return false;
   }
 
-  static List<Map<String, Object>> toListMap<T extends Model>(List<T> list) {
+  static List<Map<String, Object?>>? toListMap<T extends Model>(List<T> list) {
     if (list == null || list.length == 0) return null;
 
-    List<Map<String, Object>> returnList = [];
+    List<Map<String, Object?>> returnList = [];
     list.forEach((element) {
       returnList.add(element.toMap());
     });
@@ -35,7 +34,7 @@ class AssertUtils {
   }
 
   static extractValue<T>(Map dataMap, String reference) {
-    T defaultValue = _getDefaultValue(reference, T);
+    T? defaultValue = _getDefaultValue(reference, T);
     dynamic value = dataMap[reference];
 
     if (value == null || !(value is T)) return defaultValue;
@@ -44,7 +43,7 @@ class AssertUtils {
   }
 
   static extractMap<T, C>(Map dataMap, String reference) {
-    Map defaultValue = _getDefaultValue(reference, Map);
+    Map? defaultValue = _getDefaultValue(reference, Map);
     if (defaultValue != null && !(defaultValue is Map)) return defaultValue;
 
     dynamic value = dataMap[reference];
@@ -58,14 +57,14 @@ class AssertUtils {
     }
   }
 
-  static extractEnum<T>(Map dataMap, String reference, List<T> values) {
-    T defaultValue = _getDefaultValue(reference, T);
+  static extractEnum<T>(Map dataMap, String reference, List<T?> values) {
+    T? defaultValue = _getDefaultValue(reference, T);
     dynamic value = dataMap[reference];
 
     if (value == null || !(value is String)) return defaultValue;
 
     String castedValue = value;
-    if (AssertUtils.isNullOrEmptyOrInvalid(castedValue, String))
+    if (AssertUtils.isNullOrEmptyOrInvalid(castedValue, String)!)
       return defaultValue;
 
     return values.firstWhere((e) {
@@ -104,12 +103,12 @@ class AssertUtils {
   static fromListMap<T extends Model>(Object mapData, Function newModel) {
     if (mapData == null || mapData is List<Map<String, dynamic>>) return null;
 
-    List<Map<String, dynamic>> listMapData = mapData;
+    List<Map<String, dynamic>> listMapData = mapData as List<Map<String, dynamic>>;
     if (listMapData.length <= 0) return null;
 
-    List<T> actionButtons;
+    List<T?>? actionButtons;
     listMapData.forEach((actionButtonData) {
-      return actionButtons.add(newModel().fromMap(actionButtonData));
+      return actionButtons!.add(newModel().fromMap(actionButtonData));
     });
 
     return actionButtons;

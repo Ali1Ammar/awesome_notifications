@@ -15,39 +15,39 @@ import 'package:flutter/material.dart';
 /// A representation of default settings that applies to all notifications with same channel key
 /// [soundSource] needs to be a native resource media type
 class NotificationChannel extends Model {
-  String channelKey;
-  String channelName;
-  String channelDescription;
-  bool channelShowBadge;
+  String? channelKey;
+  String? channelName;
+  String? channelDescription;
+  bool? channelShowBadge;
 
-  NotificationImportance importance;
+  NotificationImportance? importance;
 
-  bool playSound;
-  String soundSource;
-  DefaultRingtoneType defaultRingtoneType;
+  bool? playSound;
+  String? soundSource;
+  DefaultRingtoneType? defaultRingtoneType;
 
-  bool enableVibration;
-  Int64List vibrationPattern;
+  bool? enableVibration;
+  Int64List? vibrationPattern;
 
-  bool enableLights;
-  Color ledColor;
-  int ledOnMs;
-  int ledOffMs;
+  bool? enableLights;
+  Color? ledColor;
+  int? ledOnMs;
+  int? ledOffMs;
 
-  String groupKey;
-  GroupSort groupSort;
-  GroupAlertBehavior groupAlertBehavior;
+  String? groupKey;
+  GroupSort? groupSort;
+  GroupAlertBehavior? groupAlertBehavior;
 
-  NotificationPrivacy defaultPrivacy;
+  NotificationPrivacy? defaultPrivacy;
 
-  String icon;
-  Color defaultColor;
+  String? icon;
+  Color? defaultColor;
 
-  bool locked;
-  bool onlyAlertOnce;
+  bool? locked;
+  bool? onlyAlertOnce;
 
   NotificationChannel(
-      {Key key,
+      {Key? key,
       this.channelKey,
       this.channelName,
       this.channelDescription,
@@ -173,11 +173,11 @@ class NotificationChannel extends Model {
     this.locked = AssertUtils.extractValue(dataMap, 'locked');
     this.onlyAlertOnce = AssertUtils.extractValue(dataMap, 'onlyAlertOnce');
 
-    int defaultColorValue = AssertUtils.extractValue(dataMap, 'defaultColor');
-    this.defaultColor = defaultColor == null ? null : Color(defaultColorValue);
+    int? defaultColorValue = AssertUtils.extractValue(dataMap, 'defaultColor');
+    this.defaultColor = defaultColor == null ? null : Color(defaultColorValue!);
 
-    int ledColorValue = AssertUtils.extractValue(dataMap, 'ledColor');
-    this.ledColor = defaultColor == null ? null : Color(ledColorValue);
+    int? ledColorValue = AssertUtils.extractValue(dataMap, 'ledColor');
+    this.ledColor = defaultColor == null ? null : Color(ledColorValue!);
 
     this.ledOnMs = AssertUtils.extractValue(dataMap, 'ledOnMs');
     this.ledOffMs = AssertUtils.extractValue(dataMap, 'ledOffMs');
@@ -187,8 +187,8 @@ class NotificationChannel extends Model {
 
   @override
   void validate() {
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelKey, String));
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelName, String));
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelDescription, String));
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelKey, String)!);
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelName, String)!);
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelDescription, String)!);
   }
 }

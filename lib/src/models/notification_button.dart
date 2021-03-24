@@ -16,12 +16,12 @@ import 'package:awesome_notifications/src/utils/string_utils.dart';
 /// [ActionButtonType.DisabledAction]: after user taps, the notification bar is closed, but the respective action event is not fired.
 /// [ActionButtonType.KeepOnTop]: after user taps, the notification bar is not closed, but an action event is fired.
 class NotificationActionButton extends Model {
-  String key;
-  String label;
-  String icon;
-  bool enabled;
-  bool autoCancel;
-  ActionButtonType buttonType;
+  String? key;
+  String? label;
+  String? icon;
+  bool? enabled;
+  bool? autoCancel;
+  ActionButtonType? buttonType;
 
   NotificationActionButton(
       {this.key,
@@ -62,8 +62,8 @@ class NotificationActionButton extends Model {
 
   @override
   void validate() {
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(key, String));
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(label, String));
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(autoCancel, bool));
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(key, String)!);
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(label, String)!);
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(autoCancel, bool)!);
   }
 }

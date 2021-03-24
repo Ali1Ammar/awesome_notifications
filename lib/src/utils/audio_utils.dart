@@ -14,28 +14,28 @@ class AudioUtils extends MediaUtils {
   /// FACTORY METHODS *********************************************
 
   @override
-  getFromMediaAsset(String mediaPath) {
+  getFromMediaAsset(String? mediaPath) {
     return null;
 
     /// TODO MISSING IMPLEMENTATION
   }
 
   @override
-  getFromMediaFile(String mediaPath) {
+  getFromMediaFile(String? mediaPath) {
     return null;
 
     /// TODO MISSING IMPLEMENTATION
   }
 
   @override
-  getFromMediaNetwork(String mediaPath) {
+  getFromMediaNetwork(String? mediaPath) {
     return null;
 
     /// TODO MISSING IMPLEMENTATION
   }
 
   @override
-  getFromMediaResource(String mediaPath) {
+  getFromMediaResource(String? mediaPath) {
     return null;
 
     /// TODO MISSING IMPLEMENTATION
