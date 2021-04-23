@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AssertUtils {
-  static String toSimpleEnumString<T>(T e) {
+  static String? toSimpleEnumString<T>(T e) {
+    if(e==null) return null;
     return e.toString().split('.')[1];
   }
 
@@ -68,7 +69,7 @@ class AssertUtils {
       return defaultValue;
 
     return values.firstWhere((e) {
-      return AssertUtils.toSimpleEnumString(e).toLowerCase() ==
+      return AssertUtils.toSimpleEnumString(e)?.toLowerCase() ==
           castedValue.toLowerCase();
     }, orElse: () => defaultValue);
   }

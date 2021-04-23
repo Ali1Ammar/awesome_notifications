@@ -36,7 +36,7 @@ class CronHelper {
   }
 
   /// Generates a Cron expression to be played at only exact time
-  String atDate(DateTime referenceUtcDate, {int? initialSecond}) {
+  String atDate(DateTime? referenceUtcDate, {int? initialSecond}) {
     if (initialSecond != null && initialSecond >= 0 && initialSecond <= 60) {
       if (initialSecond == 60) initialSecond = 0;
       return DateFormat('$initialSecond m H d M ? y')
