@@ -13,38 +13,37 @@ import 'package:flutter/material.dart';
 /// A representation of default settings that applies to all notifications with same channel key
 /// [soundSource] needs to be a native resource media type
 class NotificationChannel extends Model {
-  String channelKey;
-  String channelName;
-  String channelDescription;
-  bool channelShowBadge;
+  String? channelKey;
+  String? channelName;
+  String? channelDescription;
+  bool? channelShowBadge;
 
-  NotificationImportance importance;
+  NotificationImportance? importance;
 
-  bool playSound;
-  String soundSource;
+  bool? playSound;
+  String? soundSource;
 
-  bool enableVibration;
-  Int64List vibrationPattern;
+  bool? enableVibration;
+  Int64List? vibrationPattern;
 
-  bool enableLights;
-  Color ledColor;
-  int ledOnMs;
-  int ledOffMs;
+  bool? enableLights;
+  Color? ledColor;
+  int? ledOnMs;
+  int? ledOffMs;
 
-  String groupKey;
-  bool setAsGroupSummary;
-  GroupAlertBehavior groupAlertBehavior;
+  String? groupKey;
+  GroupAlertBehavior? groupAlertBehavior;
 
-  NotificationPrivacy defaultPrivacy;
+  NotificationPrivacy? defaultPrivacy;
 
-  String icon;
-  Color defaultColor;
+  String? icon;
+  Color? defaultColor;
 
-  bool locked;
-  bool onlyAlertOnce;
+  bool? locked;
+  bool? onlyAlertOnce;
 
   NotificationChannel(
-      {Key key,
+      {Key? key,
       this.channelKey,
       this.channelName,
       this.channelDescription,
@@ -59,7 +58,6 @@ class NotificationChannel extends Model {
       this.ledOnMs,
       this.ledOffMs,
       this.groupKey,
-      this.setAsGroupSummary,
       this.groupAlertBehavior,
       this.icon,
       this.defaultColor,
@@ -94,8 +92,6 @@ class NotificationChannel extends Model {
         AssertUtils.getValueOrDefault('ledOffMs', this.ledOffMs, int);
     this.groupKey =
         AssertUtils.getValueOrDefault('groupKey', this.groupKey, bool);
-    this.setAsGroupSummary = AssertUtils.getValueOrDefault(
-        'setAsGroupSummary', this.setAsGroupSummary, bool);
     this.groupAlertBehavior = AssertUtils.getValueOrDefault(
         'groupAlertBehavior', this.groupAlertBehavior, GroupAlertBehavior);
     this.icon = AssertUtils.getValueOrDefault('icon', this.icon, String);
@@ -130,7 +126,6 @@ class NotificationChannel extends Model {
       'ledOnMs': ledOnMs,
       'ledOffMs': ledOffMs,
       'groupKey': groupKey,
-      'setAsGroupSummary': setAsGroupSummary,
       'groupAlertBehavior': AssertUtils.toSimpleEnumString(groupAlertBehavior),
       'defaultPrivacy': AssertUtils.toSimpleEnumString(defaultPrivacy),
       'locked': locked,
@@ -154,8 +149,6 @@ class NotificationChannel extends Model {
         AssertUtils.extractValue(dataMap, 'vibrationPattern');
     this.enableLights = AssertUtils.extractValue(dataMap, 'enableLights');
     this.groupKey = AssertUtils.extractValue(dataMap, 'groupKey');
-    this.setAsGroupSummary =
-        AssertUtils.extractValue(dataMap, 'setAsGroupSummary');
     this.groupAlertBehavior = AssertUtils.extractEnum(
         dataMap, 'groupAlertBehavior', GroupAlertBehavior.values);
     this.defaultPrivacy = AssertUtils.extractEnum(
@@ -164,11 +157,11 @@ class NotificationChannel extends Model {
     this.locked = AssertUtils.extractValue(dataMap, 'locked');
     this.onlyAlertOnce = AssertUtils.extractValue(dataMap, 'onlyAlertOnce');
 
-    int defaultColorValue = AssertUtils.extractValue(dataMap, 'defaultColor');
-    this.defaultColor = defaultColor == null ? null : Color(defaultColorValue);
+    int? defaultColorValue = AssertUtils.extractValue(dataMap, 'defaultColor');
+    this.defaultColor = defaultColor == null ? null : Color(defaultColorValue!);
 
-    int ledColorValue = AssertUtils.extractValue(dataMap, 'ledColor');
-    this.ledColor = defaultColor == null ? null : Color(ledColorValue);
+    int? ledColorValue = AssertUtils.extractValue(dataMap, 'ledColor');
+    this.ledColor = defaultColor == null ? null : Color(ledColorValue!);
 
     this.ledOnMs = AssertUtils.extractValue(dataMap, 'ledOnMs');
     this.ledOffMs = AssertUtils.extractValue(dataMap, 'ledOffMs');
@@ -178,8 +171,8 @@ class NotificationChannel extends Model {
 
   @override
   void validate() {
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelKey, String));
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelName, String));
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelDescription, String));
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelKey, String)!);
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelName, String)!);
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelDescription, String)!);
   }
 }

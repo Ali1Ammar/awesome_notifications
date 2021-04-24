@@ -17,7 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class AwesomeNotifications {
-  static String rootNativePath;
+  static String? rootNativePath;
 
   /// STREAM CREATION METHODS *********************************************
 
@@ -125,7 +125,7 @@ class AwesomeNotifications {
   /// OBS: [defaultIcon] needs to be a Resource media type
   /// OBS 2: [channels] are updated if they already exists
   Future<bool> initialize(
-      String defaultIcon, List<NotificationChannel> channels) async {
+      String? defaultIcon, List<NotificationChannel> channels) async {
     WidgetsFlutterBinding.ensureInitialized();
 
     _channel.setMethodCallHandler(_handleMethod);
@@ -135,8 +135,8 @@ class AwesomeNotifications {
       serializedChannels.add(channel.toMap());
     }
 
-    String defaultIconPath;
-    if (!AssertUtils.isNullOrEmptyOrInvalid<String>(defaultIcon, String)) {
+    String? defaultIconPath;
+    if (!AssertUtils.isNullOrEmptyOrInvalid<String>(defaultIcon, String)!) {
       // To set a icon on top of notification, is mandatory to user a native resource
       assert(BitmapUtils().getMediaSource(defaultIcon) == MediaSource.Resource);
       defaultIconPath = defaultIcon;
@@ -153,7 +153,7 @@ class AwesomeNotifications {
   /// NATIVE MEDIA METHODS *********************************************
 
   /// Decode a drawable resource bytes into a Uint8List to be used in Flutter widgets
-  Future<Uint8List> getDrawableData(String drawablePath) async {
+  Future<Uint8List?> getDrawableData(String drawablePath) async {
     var result2 = await _channel.invokeMethod(
         CHANNEL_METHOD_GET_DRAWABLE_DATA, drawablePath);
 
@@ -176,18 +176,18 @@ class AwesomeNotifications {
         debugPrint('Notification created');
         return;
 
-      case CHANNEL_METHOD_NOTIFICATION_DISPLAYED:
+      case CHANNEL_METHOD_NOTIFICATION_DISPLAYED: 
         _displayedSubject.sink.add(ReceivedNotification().fromMap(arguments));
         debugPrint('Notification displayed');
         return;
 
       case CHANNEL_METHOD_NOTIFICATION_DISMISSED:
-        _dismissedSubject.sink.add(ReceivedAction().fromMap(arguments));
+        _dismissedSubject.sink.add(ReceivedAction().fromMap(arguments) as ReceivedAction);
         debugPrint('Notification dismissed');
         return;
 
       case CHANNEL_METHOD_ACTION_RECEIVED:
-        _actionSubject.sink.add(ReceivedAction().fromMap(arguments));
+        _actionSubject.sink.add(ReceivedAction().fromMap(arguments) as ReceivedAction);
         debugPrint('Action received');
         return;
 
@@ -206,16 +206,16 @@ class AwesomeNotifications {
   /// FIREBASE METHODS *********************************************
 
   /// Gets the firebase cloud messaging token
-  Future<String> get firebaseAppToken async {
+  Future<String?> get firebaseAppToken async {
     final String token =
-        await _channel.invokeMethod(CHANNEL_METHOD_GET_FCM_TOKEN);
+        await (_channel.invokeMethod(CHANNEL_METHOD_GET_FCM_TOKEN));
     return token;
   }
 
   /// Check if firebase is fully available on the project
-  Future<bool> get isFirebaseAvailable async {
+  Future<bool?> get isFirebaseAvailable async {
     final bool isAvailable =
-        await _channel.invokeMethod(CHANNEL_METHOD_IS_FCM_AVAILABLE);
+        await (_channel.invokeMethod(CHANNEL_METHOD_IS_FCM_AVAILABLE));
     return isAvailable;
   }
 
@@ -224,21 +224,21 @@ class AwesomeNotifications {
   /// Creates a new notification.
   /// If notification has no [body] or [title], it will only be created, but never displayed. (background notification)
   /// [schedule] and [actionButtons] are optional
-  Future<bool> createNotification({
-    @required NotificationContent content,
-    NotificationSchedule schedule,
-    List<NotificationActionButton> actionButtons,
+  Future<bool?> createNotification({
+    required NotificationContent content,
+    NotificationSchedule? schedule,
+    List<NotificationActionButton>? actionButtons,
   }) async {
-    _validateId(content.id);
+    _validateId(content.id!);
 
     try {
-      final bool wasCreated = await _channel.invokeMethod(
+      final bool? wasCreated = await (_channel.invokeMethod(
           CHANNEL_METHOD_CREATE_NOTIFICATION,
           PushNotification(
                   content: content,
                   schedule: schedule,
                   actionButtons: actionButtons)
-              .toMap());
+              .toMap())); 
 
       return wasCreated;
     } on PlatformException catch (error) {
@@ -248,29 +248,29 @@ class AwesomeNotifications {
   }
 
   /// Check if the notifications are permitted
-  Future<bool> isNotificationAllowed() async {
+  Future<bool?> isNotificationAllowed() async {
     final bool isAllowed =
-        await _channel.invokeMethod(CHANNEL_METHOD_IS_NOTIFICATION_ALLOWED);
+        await (_channel.invokeMethod(CHANNEL_METHOD_IS_NOTIFICATION_ALLOWED));
     return isAllowed;
   }
 
   /// Prompts the user to enabled notifications
   Future<bool> requestPermissionToSendNotifications() async {
     final bool isAllowed =
-        await _channel.invokeMethod(CHANNEL_METHOD_REQUEST_NOTIFICATIONS);
+        await (_channel.invokeMethod(CHANNEL_METHOD_REQUEST_NOTIFICATIONS));
     return isAllowed;
   }
 
   /// List all active scheduled notifications.
-  Future<List<PushNotification>> listScheduledNotifications() async {
+  Future<List<PushNotification>?> listScheduledNotifications() async {
     List<PushNotification> scheduledNotifications = [];
-    List<Object> returned =
+    List<Object>? returned =
         await _channel.invokeListMethod(CHANNEL_METHOD_LIST_ALL_SCHEDULES);
-    for (Object object in returned) {
+    for (Object object in returned??[]) {
       if (object is Map) {
         try {
           PushNotification pushNotification =
-              PushNotification().fromMap(Map<String, dynamic>.from(object));
+              PushNotification().fromMap(Map<String, dynamic>.from(object))!;
           scheduledNotifications.add(pushNotification);
         } catch (e) {
           return [];
@@ -287,9 +287,9 @@ class AwesomeNotifications {
   }
 
   /// Remove a notification channel
-  Future<bool> removeChannel(String channelKey) async {
-    final bool wasRemoved = await _channel.invokeMethod(
-        CHANNEL_METHOD_REMOVE_NOTIFICATION_CHANNEL, channelKey);
+  Future<bool?> removeChannel(String channelKey) async {
+    final bool wasRemoved = await (_channel.invokeMethod(
+        CHANNEL_METHOD_REMOVE_NOTIFICATION_CHANNEL, channelKey));
     return wasRemoved;
   }
 
@@ -306,8 +306,8 @@ class AwesomeNotifications {
   }
 
   /// Get badge counter (on iOS the amount is global)
-  Future<int> getGlobalBadgeCounter() async {
-    final int badgeCount =
+  Future<int?> getGlobalBadgeCounter() async {
+    final int? badgeCount =
         await _channel.invokeMethod(CHANNEL_METHOD_GET_BADGE_COUNT);
     return badgeCount;
   }
@@ -316,6 +316,7 @@ class AwesomeNotifications {
   Future<void> resetGlobalBadge() async {
     await _channel.invokeListMethod(CHANNEL_METHOD_RESET_BADGE);
   }
+
 
   /// Cancel a single notification
   Future<void> cancel(int id) async {

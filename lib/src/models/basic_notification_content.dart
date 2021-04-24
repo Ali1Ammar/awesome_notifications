@@ -6,20 +6,21 @@ import 'package:awesome_notifications/src/utils/html_utils.dart';
 import 'package:flutter/material.dart';
 
 class BaseNotificationContent extends Model {
-  int id;
-  String channelKey;
-  String title;
-  String body;
-  String summary;
-  bool showWhen;
-  Map<String, dynamic> payload;
-  String icon;
-  String largeIcon;
-  String bigPicture;
-  bool autoCancel;
-  Color color;
-  Color backgroundColor;
-  NotificationPrivacy privacy;
+  int? id;
+  String? channelKey;
+  String? title;
+  String? body;
+  String? summary;
+  bool? showWhen;
+  Map<String, dynamic>? payload;
+  String? icon;
+  String? largeIcon;
+  String? bigPicture;
+  String? customSound;
+  bool? autoCancel;
+  Color? color;
+  Color? backgroundColor;
+  NotificationPrivacy? privacy;
 
   BaseNotificationContent({
     this.id,
@@ -53,10 +54,10 @@ class BaseNotificationContent extends Model {
     this.privacy = AssertUtils.extractEnum<NotificationPrivacy>(
         mapData, 'privacy', NotificationPrivacy.values);
 
-    int colorValue = AssertUtils.extractValue<int>(mapData, 'color');
+    int? colorValue = AssertUtils.extractValue<int>(mapData, 'color');
     this.color = colorValue == null ? null : Color(colorValue);
 
-    int backgroundColorValue =
+    int? backgroundColorValue =
         AssertUtils.extractValue<int>(mapData, 'backgroundColor');
     this.backgroundColor =
         backgroundColorValue == null ? null : Color(backgroundColorValue);
@@ -84,21 +85,21 @@ class BaseNotificationContent extends Model {
     };
   }
 
-  ImageProvider get bigPictureImage {
+  ImageProvider? get bigPictureImage {
     return BitmapUtils().getFromMediaPath(bigPicture);
   }
 
-  ImageProvider get largeIconImage {
+  ImageProvider? get largeIconImage {
     return BitmapUtils().getFromMediaPath(largeIcon);
   }
 
-  String get titleWithoutHtml => HtmlUtils.removeAllHtmlTags(title);
+  String? get titleWithoutHtml => HtmlUtils.removeAllHtmlTags(title);
 
-  String get bodyWithoutHtml => HtmlUtils.removeAllHtmlTags(body);
+  String? get bodyWithoutHtml => HtmlUtils.removeAllHtmlTags(body);
 
   @override
   void validate() {
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(id, int));
-    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelKey, String));
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(id, int)!);
+    assert(!AssertUtils.isNullOrEmptyOrInvalid(channelKey, String)!);
   }
 }

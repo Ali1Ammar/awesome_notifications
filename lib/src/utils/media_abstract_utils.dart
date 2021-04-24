@@ -2,7 +2,7 @@ import 'package:awesome_notifications/src/enumerators/media_source.dart';
 import 'package:flutter/material.dart';
 
 abstract class MediaUtils {
-  MediaSource getMediaSource(String mediaPath) {
+  MediaSource getMediaSource(String? mediaPath) {
     if (mediaPath != null) {
       if (RegExp(r'^https?:\/\/').hasMatch(mediaPath)) {
         return MediaSource.Network;
@@ -23,7 +23,7 @@ abstract class MediaUtils {
     return MediaSource.Unknown;
   }
 
-  String cleanMediaPath(String mediaPath) {
+  String? cleanMediaPath(String? mediaPath) {
     if (mediaPath != null) {
       if (RegExp(r'^file:\/\/').hasMatch(mediaPath)) {
         mediaPath = mediaPath.replaceAll('file:\/', '');
@@ -39,18 +39,18 @@ abstract class MediaUtils {
   }
 
   @protected
-  getFromMediaAsset(String mediaPath);
+  getFromMediaAsset(String? mediaPath);
 
   @protected
-  getFromMediaFile(String mediaPath);
+  getFromMediaFile(String? mediaPath);
 
   @protected
-  getFromMediaNetwork(String mediaPath);
+  getFromMediaNetwork(String? mediaPath);
 
   @protected
-  getFromMediaResource(String mediaPath);
+  getFromMediaResource(String? mediaPath);
 
-  getFromMediaPath(String mediaPath) {
+  getFromMediaPath(String? mediaPath) {
     switch (getMediaSource(mediaPath)) {
       case MediaSource.Asset:
         return getFromMediaAsset(mediaPath);
